@@ -1,11 +1,15 @@
 package model;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.Properties;
+
 import org.json.*;
 import com.google.gson.*;
 
@@ -13,10 +17,12 @@ public class callAPI {
 
     public static void main(String[] args) throws IOException, InterruptedException, JSONException  {
         //Nosso HTTP request é onde vamos informar nosso metodo, nossa URI, HEADERS, etc.
+        String chave = loadKey();
+        String url = String.format("https://imdb-api.com/pt/API/Search/%s/MoonLight",chave);
         HttpRequest request =  HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("https://imdb-api.com/pt/API/Search/{apiKey}/MoonLight"))
-                .timeout(Duration.ofSeconds(9)) //Por padrão não precisamos especificar um timeout no nosso HTTP request
+                .uri(URI.create(url))
+                .timeout(Duration.ofSeconds(20)) //Por padrão não precisamos especificar um timeout no nosso HTTP request
                                                 //Mas como boas praticas, é importante declarar um timeout, do contrario
                                                 //podemos fazer nossa aplicação ficar aguardando uma resposta por tempo
                                                 //indefinido.
@@ -25,7 +31,7 @@ public class callAPI {
 
         //O HTTP client tem como objetivo estabelecer a conexão com nossa API
         HttpClient httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(8)) //Precisamos estabelecer um timeout aqui tambem
+                .connectTimeout(Duration.ofSeconds(20)) //Precisamos estabelecer um timeout aqui tambem
                                                         //Neste timeout vamos definir o limite de tempo para estabelecer
                                                         //Conexão com nossa API, diferente do tempo limite para obter
                                                         //Uma resposta.
@@ -56,4 +62,15 @@ public class callAPI {
 
     }
 
+    public static String loadKey() throws IOException {
+        InputStream input = new FileInputStream("chaves.properties") ;
+            Properties prop = new Properties();
+
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+
+        return (prop.getProperty("api.key"));
+    }
 }
