@@ -22,7 +22,7 @@ public class callAPI {
                 .GET()
                 .uri(URI.create(String.format("https://imdb-api.com/pt/API/Search/%s/MoonLight",chave)))
                 .timeout(Duration.ofSeconds(20)) //Por padrão não precisamos especificar um timeout no nosso HTTP request
-                                                //Mas como boas praticas, é importante declarar um timeout, do contrario
+                                                //Mas como boas práticas, é importante declarar um timeout, do contrário
                                                 //podemos fazer nossa aplicação ficar aguardando uma resposta por tempo
                                                 //indefinido.
                 .build();
