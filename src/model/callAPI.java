@@ -18,10 +18,9 @@ public class callAPI {
     public static void main(String[] args) throws IOException, InterruptedException, JSONException  {
         //Nosso HTTP request é onde vamos informar nosso metodo, nossa URI, HEADERS, etc.
         String chave = loadKey();
-        String url = String.format("https://imdb-api.com/pt/API/Search/%s/MoonLight",chave);
         HttpRequest request =  HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(url))
+                .uri(URI.create(String.format("https://imdb-api.com/pt/API/Search/%s/MoonLight",chave)))
                 .timeout(Duration.ofSeconds(20)) //Por padrão não precisamos especificar um timeout no nosso HTTP request
                                                 //Mas como boas praticas, é importante declarar um timeout, do contrario
                                                 //podemos fazer nossa aplicação ficar aguardando uma resposta por tempo
@@ -66,10 +65,7 @@ public class callAPI {
         InputStream input = new FileInputStream("chaves.properties") ;
             Properties prop = new Properties();
 
-            // load a properties file
             prop.load(input);
-
-            // get the property value and print it out
 
         return (prop.getProperty("api.key"));
     }
