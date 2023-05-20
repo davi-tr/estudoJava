@@ -1,11 +1,7 @@
 package model;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -35,7 +31,7 @@ public class callAPI {
         System.out.println("Rua: "+obj.getString("address_name"));
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonElement je = JsonParser.parseString(response.body().toString());
+        JsonElement je = JsonParser.parseString(response.body());
         String prettyJsonString = gson.toJson(je);
         System.out.println(prettyJsonString);
 
